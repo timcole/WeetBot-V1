@@ -31,7 +31,8 @@ exports.error = (msg) => {
 
 exports.critical = (msg) => {
 	console.log("   ! ".red + time() + " - " + msg);
-	process.exit(1);
+	console.log("\n");
+	process.exit(0);
 }
 
 exports.numberFormat = (x) => {

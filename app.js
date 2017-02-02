@@ -1,4 +1,5 @@
 const tmi = require("tmi.js");
+const color = require("colors/safe");
 const config = require("./config.json");
 const log = require("./modules/log.js");
 const controller = require("./modules/controller.js");
@@ -21,20 +22,20 @@ controller.load(config, () => {
 	var client = new tmi.client(options);
 
 	client.on("connecting", () => {
-	    log.warn(`Connecting to Twitch as ${config.credentials.username}.`);
+	    log.warn(`Connecting to ${color.magenta("Twitch")} as ${color.cyan(config.credentials.username)}.`);
 	});
 
 	client.on("connected", () => {
-	    log.pass(`Connected to Twitch.`);
+	    log.pass(`Connected to ${color.magenta("Twitch")}.`);
 	});
 
 	client.on("disconnected", () => {
-	    log.error(`Disconnected from Twitch.`);
+	    log.error(`Disconnected from ${color.magenta("Twitch")}.`);
 	});
 
 	client.on("chat", (channel, userstate, message, self) => {
 	    if (self) return;
-		controller.check({channel, userstate, message});
+		controller.check({client, channel, userstate, message});
 	});
 
 	client.connect();

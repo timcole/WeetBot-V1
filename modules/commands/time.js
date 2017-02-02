@@ -3,6 +3,7 @@ const log = require('../log.js');
 
 var exports = module.exports = {};
 
-exports.check = (data) => {
+exports.trigger = (data) => {
 	log.pass(`Time`);
+	console.log(data);
 };
