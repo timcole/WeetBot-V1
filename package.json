@@ -1,0 +1,20 @@
+{
+  "name": "weetbot-twitch",
+  "version": "1.0.0",
+  "description": "Another TwitchTV Chat Bot...",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "keywords": [
+    "twitch",
+    "twitchtv",
+    "weetbot",
+    "chatbot"
+  ],
+  "author": "Timothy Cole [ModestTim]",
+  "license": "MIT",
+  "dependencies": {
+    "tmi.js": "^1.1.2"
+  }
+}
