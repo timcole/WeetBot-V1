@@ -1,9 +1,10 @@
-var tmi = require("tmi.js");
-var config = require("./config.json");
+const tmi = require("tmi.js");
+const config = require("./config.json");
+const log = require("./modules/log.js");
 
-var options = {
+const options = {
     options: {
-        debug: config.debug || false
+        debug: false
     },
     connection: {
         reconnect: true
@@ -16,5 +17,22 @@ var options = {
 };
 
 var client = new tmi.client(options);
+
+client.on("connecting", () => {
+    log.warn(`Connecting to Twitch as ${config.credentials.username}.`);
+});
+
+client.on("connected", () => {
+    log.pass(`Connected to Twitch.`);
+});
+
+client.on("disconnected", () => {
+    log.error(`Disconnected from Twitch.`);
+});
+
+client.on("chat", (channel, userstate, message, self) => {
+    if (self) return;
+
+});
 
 client.connect();

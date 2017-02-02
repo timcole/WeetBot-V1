@@ -15,6 +15,7 @@
   "author": "Timothy Cole [ModestTim]",
   "license": "MIT",
   "dependencies": {
+    "colors": "^1.1.2",
     "tmi.js": "^1.1.2"
   }
 }
