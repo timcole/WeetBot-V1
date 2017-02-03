@@ -19,6 +19,14 @@ exports.load = (cfg, start) => {
 
 	log.pass(`Loaded ${color.cyan(loaded)} command modules.`);
 
+	config.commands.push({
+		"command": `!about @${config.credentials.username}`,
+		"response": (config.credentials.username.toLowerCase() === "weetbot" ?
+			"Hello, My name is WeetBot I was developed in NodeJS by @ModestTim!" :
+			`Hello, My name is ${config.credentials.username}, a NodeJS chat bot forked off WeetBot on GitHub by @ModestTim! [GitHub: TimothyCole]`
+		)
+	});
+
 	start();
 }
 
