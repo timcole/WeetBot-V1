@@ -24,10 +24,10 @@ exports.load = (cfg, start) => {
 
 exports.check = (data) => {
 	for (var i = 0; i < config.commands.length; i++) {
-		if (data.message.toLowerCase() === config.commands[i].command.toLowerCase()) {
+		if (data.message.toLowerCase().startsWith(config.commands[i].command.toLowerCase())) {
 			if(config.commands[i].module) modules[config.commands[i].module].trigger(data);
 			if(config.commands[i].response) {
-				data.client.say(data.channel, config.commands[i].response);
+				data.client.say(data.channel, config.commands[i].response.replace("{{ user }}", "@"+(data.userstate['display-name'] || data.userstate.username)));
 				log.pass(`${color.cyan(config.commands[i].command.toLowerCase())} was issued in ${color.cyan(data.channel)} by ${color.cyan(data.userstate['display-name'] || data.userstate.username)}`);
 			}
 		}
