@@ -61,11 +61,11 @@ log.critical("Red Exclamation Mark!"); // KILLS PROCESS
 *Production modules shouldn't use `console.log()`*
 
 ##### Trigger
-Command modules must incude a `trigger` export with a` data` param that will be called on a command.
-`data.client`: (Object | [tmi.js](https://docs.tmijs.org/v1.1.2/Commands.html) connecton)
-`data.channel`: (String)
-`data.userstate`: (String | Chatter Infomation)
-`data.message`: (String)
+Command modules must incude a `trigger` export with a` data` param that will be called on a command.  
+`data.client`: (Object | [tmi.js](https://docs.tmijs.org/v1.1.2/Commands.html) connecton)  
+`data.channel`: (String)  
+`data.userstate`: (String | Chatter Infomation)  
+`data.message`: (String)  
 
 ##### Example Command Module - `modules/commands/example.js`
 ```JS
