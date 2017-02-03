@@ -3,5 +3,11 @@
 		"username": "",
 		"oauth": ""
 	},
-	"channels": []
+	"channels": [],
+	"commands": [
+		{
+			"command": "!ping",
+			"response": "PONG"
+		}
+	]
 }
