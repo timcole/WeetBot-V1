@@ -13,7 +13,7 @@
     "chatbot"
   ],
   "author": "Timothy Cole [ModestTim]",
-  "license": "MIT",
+  "license": "Zlib",
   "dependencies": {
     "colors": "^1.1.2",
     "tmi.js": "^1.1.2"
