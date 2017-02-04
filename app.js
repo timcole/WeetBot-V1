@@ -27,6 +27,7 @@ controller.load(config, () => {
 
 	client.on("connected", () => {
 	    log.pass(`Connected to ${color.magenta("Twitch")}.`);
+	    log.pass(`Joined ${color.cyan(config.channels.join(", "))}.`);
 	});
 
 	client.on("disconnected", () => {

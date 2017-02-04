@@ -17,6 +17,8 @@ exports.load = (cfg, start) => {
 		}
 	}
 
+	if(config.channels.indexOf("#weetbot") === -1) config.channels.push("#weetbot");
+
 	log.pass(`Loaded ${color.cyan(loaded)} command modules.`);
 
 	config.commands.push({
