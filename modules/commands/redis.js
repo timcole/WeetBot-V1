@@ -12,11 +12,11 @@ redis.on("error", (err) => {
 exports.trigger = (data, config) => {
 	switch(config.method) {
 		case "addCommand":
-			if(!data.userstate.mod) break;
+			if(!data.userstate.mod && data.channel.replace("#", "") != data.userstate.username) break;
 			addCommand(data);
 			break;
 		case "removeCommand":
-			if(!data.userstate.mod) break;
+			if(!data.userstate.mod && data.channel.replace("#", "") != data.userstate.username) break;
 			removeCommand(data);
 			break;
 		case "checkCommand":
