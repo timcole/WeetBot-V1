@@ -10,8 +10,9 @@ exports.load = (cfg, start) => {
 	var loaded = 0;
 
 	for (var i = 0; i < config.commands.length; i++) {
-		if(typeof modules[config.commands[i].module] !== 'undefined') log.critical("You can't have two modules with the same name loaded!");
-		if(config.commands[i].module) {
+		if(typeof modules[config.commands[i].module] !== 'undefined') {
+			log.warn(`Module ${color.cyan(config.commands[i].module)} is already loaded.`);
+		} else if(config.commands[i].module) {
 			modules[config.commands[i].module] = require(`./commands/${config.commands[i].module}.js`);
 			loaded++;
 		}
@@ -34,8 +35,8 @@ exports.load = (cfg, start) => {
 
 exports.check = (data) => {
 	for (var i = 0; i < config.commands.length; i++) {
-		if (data.message.toLowerCase().startsWith(config.commands[i].command.toLowerCase())) {
-			if(config.commands[i].module) modules[config.commands[i].module].trigger(data);
+		if(data.message.toLowerCase().startsWith(config.commands[i].command.toLowerCase()) || config.commands[i].command == "*") {
+			if(config.commands[i].module) modules[config.commands[i].module].trigger(data, config.commands[i]);
 			if(config.commands[i].response) {
 				data.client.say(data.channel, config.commands[i].response.replace("{{ user }}", "@"+(data.userstate['display-name'] || data.userstate.username)));
 				log.pass(`${color.cyan(config.commands[i].command.toLowerCase())} was issued in ${color.cyan(data.channel)} by ${color.cyan(data.userstate['display-name'] || data.userstate.username)}`);

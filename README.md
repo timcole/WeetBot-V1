@@ -5,6 +5,7 @@
 ##### Current features:
   - Static commands
   - NodeJS based module commands
+  - Redis commands
 
 ##### TODO:
   - Rate limiting
@@ -22,6 +23,7 @@ $ npm install
 $ cp config.sample.js config.js
 $ cp .env.sample .env
 $ vim config.js
+$ vim .env
 ```
 
 ---
@@ -35,7 +37,7 @@ Fill out `config.js` with your information and commands.
 `channels`: *(Required | Array of Strings | Start with #)*
 
 `commands`: *(Required | Array of Objects)*
-  - `command` *(Required | String)*
+  - `command` *(Required | String)* - *Use \* for every message*
   - `response` *(Optional | String)* - *Use `{{ user }}` for username*
   - `module` *(Optional | String)*
 
@@ -89,3 +91,26 @@ exports.trigger = (data) => {
 	"module": "example"
 }
 ```
+
+---
+### Redis command module
+
+##### Example Config
+```JS
+{
+	command: "*",
+	method: "checkCommand",
+	module: "redis"
+},
+{
+	command: "!addcom",
+	method: "addCommand",
+	module: "redis"
+},
+{
+	command: "!delcom",
+	method: "removeCommand",
+	module: "redis"
+}
+```
+*Production modules shouldn't use `console.log()`*

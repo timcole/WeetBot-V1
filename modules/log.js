@@ -1,4 +1,5 @@
 const color = require('colors');
+const config = require('../config.js');
 
 var time = function() {
 	var date = new Date();
@@ -22,6 +23,7 @@ exports.pass = (msg) => {
 }
 
 exports.warn = (msg) => {
+	if(config.settings) if(!config.settings.warnings) return;
 	console.log("   ~ ".yellow + time() + " - " + msg);
 }
 
