@@ -19,13 +19,14 @@
 $ git clone git@github.com:TimothyCole/WeetBot-Twitch-Chatbot.git
 $ cd WeetBot-Twitch-Chatbot
 $ npm install
-$ cp config.sample.json config.json
-$ vim config.json
+$ cp config.sample.js config.js
+$ cp .env.sample .env
+$ vim config.js
 ```
 
 ---
 ### Config
-Fill out `config.json` with your information and commands.
+Fill out `config.js` with your information and commands.
 
 `credentials`: *(Required | Object)*
   - `username` *(Required | String)*

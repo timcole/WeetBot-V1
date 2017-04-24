@@ -1,6 +1,6 @@
 const tmi = require("tmi.js");
 const color = require("colors/safe");
-const config = require("./config.json");
+const config = require("./config.js");
 const log = require("./modules/log.js");
 const controller = require("./modules/controller.js");
 
