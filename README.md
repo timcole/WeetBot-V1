@@ -113,4 +113,3 @@ exports.trigger = (data) => {
 	module: "redis"
 }
 ```
-*Production modules shouldn't use `console.log()`*
