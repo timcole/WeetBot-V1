@@ -112,6 +112,11 @@ exports.trigger = (data) => {
 	command: "!delcom",
 	method: "removeCommand",
 	module: "redis"
+},
+{
+	command: "!commands",
+	method: "getCommands",
+	module: "redis"
 }
 ```
 
