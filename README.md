@@ -1,7 +1,10 @@
 # WeetBot
 **WeetBot is yet another chatbot for twitch.tv**
 
----  
+[![Sub on Twitch](https://static-cdn.jtvnw.net/jtv_user_pictures/panel-51684790-image-2c23ef005f9a4731-320-320.png)](https://www.twitch.tv/modesttim/subscribe)
+[![Donate](https://static-cdn.jtvnw.net/jtv_user_pictures/panel-51684790-image-0aec189e2b733d0e-320-320.png)](https://twitch.streamlabs.com/modesttim)
+
+---
 ##### Current features:
   - Static commands
   - NodeJS based module commands
