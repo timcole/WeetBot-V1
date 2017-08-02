@@ -33,6 +33,7 @@ Fill out `config.js` with your information and commands.
 `credentials`: *(Required | Object)*
   - `username` *(Required | String)*
   - `oauth` *(Required | String)*
+  - `client_id` *(Optional | Required for some modules | String)*
 
 `channels`: *(Required | Array of Strings | Start with #)*
 
@@ -111,5 +112,16 @@ exports.trigger = (data) => {
 	command: "!delcom",
 	method: "removeCommand",
 	module: "redis"
+}
+```
+
+---
+### Uptime command module
+[Required](#config): `client_id`
+##### Example Config
+```JS
+{
+	command: "!uptime",
+	module: "uptime"
 }
 ```
