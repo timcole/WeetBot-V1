@@ -75,15 +75,13 @@ var getCommands = (data) => {
 		if (val.length > 1) {
 			var commands = `${val.slice(0, -1).join(', ')} and ${val.slice(-1)}`.replace(new RegExp(`WeetBot::command::${data.channel}::`, 'g'), "");
 			var message = `The commands for ${data.channel.replace("#", "")} are ${commands}`
-			console.log(message)
 		} else if (val.length == 1) {
 			var commands = val.join(', ').replace(new RegExp(`WeetBot::command::${data.channel}::`, 'g'), "");
 			var message = `The only command for ${data.channel.replace("#", "")} is ${commands}`
-			console.log(message)
 		} else {
 			var message = `I couldn't find any commands for ${data.channel.replace("#", "")}. BibleThump`;
 		}
-		// data.client.say(data.channel, message);
+		data.client.say(data.channel, message);
 		log.pass(`${color.cyan(data.message.toLowerCase())} was issued in ${color.cyan(data.channel)} by ${color.cyan(data.userstate['display-name'] || data.userstate.username)}`);
 	});
 };
