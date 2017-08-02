@@ -36,8 +36,9 @@ var addCommand = (data) => {
 	var response = params.join(" ");
 
 	if(command && response) {
-		redis.set(`WeetBot::command::${command}`, response, () => {
-			log.pass(`${color.cyan(command)} was created in ${color.cyan(data.channel)} by ${color.cyan(data.userstate['display-name'] || data.userstate.username)}`);
+		redis.set(`WeetBot::command::${data.channel}::${command}`, response, () => {
+			data.client.say(data.channel, `${command} was added as a command! PogChamp`);
+			log.pass(`${color.cyan(command)} was ${color.green("created")} in ${color.cyan(data.channel)} by ${color.cyan(data.userstate['display-name'] || data.userstate.username)}`);
 		});
 	}
 };
@@ -50,14 +51,15 @@ var removeCommand = (data) => {
 	params.splice(0, 1); // Remove command
 
 	if(command) {
-		redis.del(`WeetBot::command::${command}`, () => {
-			log.pass(`${color.cyan(command)} was removed in ${color.cyan(data.channel)} by ${color.cyan(data.userstate['display-name'] || data.userstate.username)}`);
+		redis.del(`WeetBot::command::${data.channel}::${command}`, () => {
+			data.client.say(data.channel, `Bye bye ${command}. BibleThump`);
+			log.pass(`${color.cyan(command)} was ${color.red("removed")} in ${color.cyan(data.channel)} by ${color.cyan(data.userstate['display-name'] || data.userstate.username)}`);
 		});
 	}
 };
 
 var checkCommand = (data) => {
-	redis.get(`WeetBot::command::${data.message.toLowerCase()}`, (err, val) => {
+	redis.get(`WeetBot::command::${data.channel}::${data.message.toLowerCase()}`, (err, val) => {
 		if(val) {
 			data.client.say(data.channel, val);
 			log.pass(`${color.cyan(data.message.toLowerCase())} was issued in ${color.cyan(data.channel)} by ${color.cyan(data.userstate['display-name'] || data.userstate.username)}`);
