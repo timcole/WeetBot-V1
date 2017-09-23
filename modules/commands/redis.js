@@ -25,6 +25,9 @@ exports.trigger = (data, config) => {
 		case "getCommands":
 			getCommands(data);
 			break;
+		case "incrChatter":
+			incrChatter(data);
+			break;
 		default:
 			return;
 	}
@@ -41,7 +44,7 @@ var addCommand = (data) => {
 	if(command && response) {
 		redis.set(`WeetBot::command::${data.channel}::${command}`, response, () => {
 			data.client.say(data.channel, `${command} was added as a command! PogChamp`);
-			log.pass(`${color.cyan(command)} was ${color.green("created")} in ${color.cyan(data.channel)} by ${color.cyan(data.userstate['display-name'] || data.userstate.username)}`);
+			log.pass(`${color.cyan(command)} was ${color.green("created")} in ${color.cyan(data.channel)} by ${color.cyan(data.userstate.name)}`);
 		});
 	}
 };
@@ -56,7 +59,7 @@ var removeCommand = (data) => {
 	if(command) {
 		redis.del(`WeetBot::command::${data.channel}::${command}`, () => {
 			data.client.say(data.channel, `Bye bye ${command}. BibleThump`);
-			log.pass(`${color.cyan(command)} was ${color.red("removed")} in ${color.cyan(data.channel)} by ${color.cyan(data.userstate['display-name'] || data.userstate.username)}`);
+			log.pass(`${color.cyan(command)} was ${color.red("removed")} in ${color.cyan(data.channel)} by ${color.cyan(data.userstate.name)}`);
 		});
 	}
 };
@@ -65,7 +68,7 @@ var checkCommand = (data) => {
 	redis.get(`WeetBot::command::${data.channel}::${data.message.toLowerCase()}`, (err, val) => {
 		if(val) {
 			data.client.say(data.channel, val);
-			log.pass(`${color.cyan(data.message.toLowerCase())} was issued in ${color.cyan(data.channel)} by ${color.cyan(data.userstate['display-name'] || data.userstate.username)}`);
+			log.pass(`${color.cyan(data.message.toLowerCase())} was issued in ${color.cyan(data.channel)} by ${color.cyan(data.userstate.name)}`);
 		}
 	});
 };
@@ -82,6 +85,10 @@ var getCommands = (data) => {
 			var message = `I couldn't find any commands for ${data.channel.replace("#", "")}. BibleThump`;
 		}
 		data.client.say(data.channel, message);
-		log.pass(`${color.cyan(data.message.toLowerCase())} was issued in ${color.cyan(data.channel)} by ${color.cyan(data.userstate['display-name'] || data.userstate.username)}`);
+		log.pass(`${color.cyan(data.message.toLowerCase())} was issued in ${color.cyan(data.channel)} by ${color.cyan(data.userstate.name)}`);
 	});
+};
+
+var incrChatter = (data) => {
+	redis.incr(`WeetBot::total::${data.channel}::${data.userstate["user-id"]}`);
 };
