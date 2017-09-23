@@ -36,6 +36,7 @@ exports.load = (cfg, start) => {
 exports.check = (data) => {
 	for (var i = 0; i < config.commands.length; i++) {
 		if(data.message.toLowerCase().startsWith(config.commands[i].command.toLowerCase()) || config.commands[i].command == "*") {
+			data.userstate.name = data.userstate['display-name'] || data.userstate.username;
 			if(config.commands[i].module) modules[config.commands[i].module].trigger(data, config.commands[i]);
 			if(config.commands[i].response) {
 				data.client.say(data.channel, config.commands[i].response.replace("{{ user }}", "@"+(data.userstate['display-name'] || data.userstate.username)));

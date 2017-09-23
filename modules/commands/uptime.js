@@ -6,8 +6,6 @@ const config = require("../../config.js");
 var exports = module.exports = {};
 
 exports.trigger = (data) => {
-	var user = data.userstate['display-name'] || data.userstate.username;
-
 	request.get(`https://api.twitch.tv/kraken/streams/${data.channel.replace("#", "")}?client_id=${config.credentials.client_id}`, (err, response, body) => {
 		var body = JSON.parse(body);
 
@@ -23,7 +21,7 @@ exports.trigger = (data) => {
 		}
 	});
 
-	log.pass(`${color.cyan(data.message.toLowerCase())} was issued in ${color.cyan(data.channel)} by ${user}`);
+	log.pass(`${color.cyan(data.message.toLowerCase())} was issued in ${color.cyan(data.channel)} by ${color.cyan(data.userstate.name)}`);
 };
 
 var msToTime = (s) => {
