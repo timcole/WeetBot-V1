@@ -39,5 +39,15 @@ controller.load(config, () => {
 		controller.check({client, channel, userstate, message});
 	});
 
+	client.on("subscription", (channel, username, method, message, userstate) => {
+		if (typeof config.sub_alert === "string") client.say(channel, config.sub_alert.replace("{{ user }}", `@${username}`));
+		log.pass(`${color.cyan(username)} just subbed in ${color.cyan(data.channel)}`);
+	});
+
+	client.on("resub", (channel, username, months, message, userstate, methods) => {
+		if (typeof config.sub_alert === "string") client.say(channel, config.sub_alert.replace("{{ user }}", `@${username}`));
+		log.pass(`${color.cyan(username)} just resubbed in ${color.cyan(data.channel)} for ${months} months.`);
+	});
+
 	client.connect();
 });
