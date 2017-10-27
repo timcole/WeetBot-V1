@@ -49,5 +49,10 @@ controller.load(config, () => {
 		log.pass(`${color.cyan(username)} just resubbed in ${color.cyan(channel)} for ${months} months.`);
 	});
 
+	client.on("cheer", function (channel, userstate, message) {
+		if (typeof config.cheer_alert === "string") client.say(channel, config.cheer_alert.replace("{{ user }}", `@${userstate.username}`).replace("{{ bits }}", userstate.bits));
+		log.pass(`${color.cyan(userstate.username)} just cheered in ${color.cyan(channel)} with ${userstate.bits} bits.`);
+	});
+
 	client.connect();
 });
