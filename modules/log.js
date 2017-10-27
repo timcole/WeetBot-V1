@@ -1,7 +1,9 @@
 const color = require('colors');
 const config = require('../config.js');
 
-var time = function() {
+var exports = module.exports = {};
+
+exports.time = function() {
 	var date = new Date();
 
 	var hour = date.getHours();
@@ -16,23 +18,21 @@ var time = function() {
 	return `${hour}:${min}:${sec}`;
 };
 
-var exports = module.exports = {};
-
 exports.pass = (msg) => {
-	console.log("   + ".green + time() + " - " + msg);
+	console.log("   + ".green + exports.time() + " - " + msg);
 }
 
 exports.warn = (msg) => {
 	if(config.settings) if(!config.settings.warnings) return;
-	console.log("   ~ ".yellow + time() + " - " + msg);
+	console.log("   ~ ".yellow + exports.time() + " - " + msg);
 }
 
 exports.error = (msg) => {
-	console.log("   - ".red + time() + " - " + msg);
+	console.log("   - ".red + exports.time() + " - " + msg);
 }
 
 exports.critical = (msg) => {
-	console.log("   ! ".red + time() + " - " + msg);
+	console.log("   ! ".red + exports.time() + " - " + msg);
 	console.log("\n");
 	process.exit(0);
 }
