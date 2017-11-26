@@ -1,6 +1,12 @@
 const log = require('../log.js');
 const color = require("colors/safe");
-const redis = require("redis").createClient();
+const Redis = require("redis");
+const bluebird = require("bluebird");
+
+bluebird.promisifyAll(Redis.RedisClient.prototype);
+bluebird.promisifyAll(Redis.Multi.prototype);
+
+var redis = Redis.createClient();
 
 var exports = module.exports = {};
 
@@ -64,13 +70,37 @@ var removeCommand = (data) => {
 	}
 };
 
-var checkCommand = (data) => {
-	redis.get(`WeetBot::command::${data.channel}::${data.message.toLowerCase()}`, (err, val) => {
-		if(val) {
-			data.client.say(data.channel, val);
-			log.pass(`${color.cyan(data.message.toLowerCase())} was issued in ${color.cyan(data.channel)} by ${color.cyan(data.userstate.name)}`);
+var checkCommand = async (data) => {
+	try {
+		var response = await redis.getAsync(`WeetBot::command::${data.channel}::${data.message.toLowerCase()}`);
+		if (!response) return;
+
+		response = response.replace("{{ user }}", data.userstate.name);
+
+		if (response.indexOf("{{ inc }}") !== -1) {
+			var inc = await redis.getAsync(`WeetBot::command::${data.channel}::${data.message.toLowerCase()}::inc`);
+
+			if (!inc) {
+				// If nothing set it to 0
+				redis.set(`WeetBot::command::${data.channel}::${data.message.toLowerCase()}::inc`, 0);
+				inc = 0;
+			}
+
+			if (data.userstate.mod || data.channel.replace("#", "") === data.userstate.username) {
+				// If mod or channel owner runs command, inc the number
+				redis.incr(`WeetBot::command::${data.channel}::${data.message.toLowerCase()}::inc`);
+				inc++;
+			}
+
+			if (inc) data.client.say(data.channel, response.replace("{{ inc }}", inc));
+		} else {
+			data.client.say(data.channel, response);
 		}
-	});
+	} catch (err) {
+		log.error(`${color.red("Failed")} to get command information from Redis!`);
+		console.log(err)
+	}
+	log.pass(`${color.cyan(data.message.toLowerCase())} was issued in ${color.cyan(data.channel)} by ${color.cyan(data.userstate.name)}`);
 };
 
 var getCommands = (data) => {

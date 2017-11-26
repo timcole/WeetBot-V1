@@ -20,6 +20,7 @@
 		"url": "https://github.com/TimothyCole/WeetBot-Twitch-Chatbot"
 	},
 	"dependencies": {
+		"bluebird": "^3.5.1",
 		"colors": "^1.1.2",
 		"dotenv": "^4.0.0",
 		"redis": "^2.7.1",
