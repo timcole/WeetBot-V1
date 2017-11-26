@@ -13,7 +13,7 @@ String.prototype.nonce = function (length) {
 
 var PubSub = function () {
 	this.url = "wss://pubsub-edge.twitch.tv";
-	this.sub = "following.99890311";
+	this.sub = "following.51684790";
 
 	this.cache = [];
 
