@@ -122,3 +122,14 @@ var getCommands = (data) => {
 var incrChatter = (data) => {
 	redis.incr(`WeetBot::total::${data.channel}::${data.userstate["user-id"]}`);
 };
+
+exports.event = async function (event) {
+	var events = await redis.getAsync(`WeetBot::events`);
+	if (!events) events = "[]";
+	if (events) events = JSON.parse(events);
+	if (events.length >= 25) events.splice(0, 1);
+	
+	events.push(event)
+	
+	await redis.setAsync(`WeetBot::events`, JSON.stringify(events));
+};

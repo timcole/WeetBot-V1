@@ -45,3 +45,8 @@ exports.check = (data) => {
 		}
 	}
 };
+
+exports.event = (event) => {
+	event.created_at = new Date();
+	modules.redis.event(event);
+}
